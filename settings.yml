@@ -20,11 +20,12 @@ posts_tab_label:
 
 tile_shape:
   type: enum
-  default: square
+  default: portrait
   choices:
+    - portrait
     - square
     - natural
-  description: "square: an even grid of square crops. natural: each photo at its own shape, in columns."
+  description: "portrait: tall 4:5 crops, like Instagram. square: square crops. natural: each photo at its own shape, in columns."
 
 include_replies:
   default: true

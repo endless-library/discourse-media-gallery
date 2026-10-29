@@ -60,7 +60,9 @@ export default class ElMedia extends Component {
   }
 
   get rootClass() {
-    const shape = settings.tile_shape === "natural" ? "natural" : "square";
+    const shape = ["square", "natural"].includes(settings.tile_shape)
+      ? settings.tile_shape
+      : "portrait";
     return `elm elm--${shape}`;
   }
 

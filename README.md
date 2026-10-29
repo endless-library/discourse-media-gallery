@@ -8,10 +8,12 @@ What visitors get:
 - **Photos / Posts tabs** on the Archive category page. *Photos* is the
   gallery; *Posts* is Discourse's normal topic list (with Topic List
   Thumbnails' masonry view if that's installed).
-- **One grid of everything**: every photo and video from every Archive topic,
-  newest first, including photos posted as replies. The grid keeps loading as
-  you scroll. Square tiles by default, or each photo at its own shape
-  (`tile_shape`).
+- **One grid of everything**, laid out like Instagram's profile page: three
+  across, tall 4:5 tiles, hairline gaps, in a centred column (the forum
+  sidebar stays). On phones the photos run flush to the screen edges. Every
+  photo and video from every Archive topic, newest first, including photos
+  posted as replies. The grid keeps loading as you scroll. Tiles can also be
+  square, or each photo at its own shape (`tile_shape`).
 - **Tag filters** along the top (All, 2026, open-day, …).
 - **A full-screen viewer**: arrow keys or swipe to move through the whole
   gallery, swipe down or Esc to close. The caption links to the post, shows
@@ -43,7 +45,7 @@ component page.
 | `category_slug` | Category the gallery reads from (default `archive`). |
 | `default_view` | Which tab the category opens on: `media` (grid) or `posts`. |
 | `media_tab_label`, `posts_tab_label` | Tab wording. |
-| `tile_shape` | `square` (even grid) or `natural` (each photo's own shape, in columns). |
+| `tile_shape` | `portrait` (tall 4:5 crops, the default), `square`, or `natural` (each photo's own shape, in columns). |
 | `include_replies` | Include photos posted as replies, not only first posts. |
 | `filter_tags` | Tags to show first in the filter bar, in order. Others in use follow. |
 | `hide_tags` | Tags to leave out of the filter bar. |

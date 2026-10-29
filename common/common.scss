@@ -96,24 +96,35 @@ body.elm-media-active {
   }
 }
 
+// ── Column ─────────────────────────────────────────────────────────────────
+// Instagram-style: one centred column, so the grid reads as a feed of three
+// across however wide the screen is. The forum sidebar stays as it is.
+.elm-host {
+  max-width: 935px;
+  margin-inline: auto;
+}
+
 // ── Tabs ───────────────────────────────────────────────────────────────────
+// Centred, with a hairline above and the active marker on top, as on
+// Instagram's profile page.
 .elm-tabs {
   display: flex;
-  gap: 1.5rem;
-  border-bottom: 1px solid var(--elm-ink);
-  margin: 0.5rem 0 1.25rem;
+  justify-content: center;
+  gap: 3.5rem;
+  border-top: 1px solid var(--elm-rule);
+  margin: 0.5rem 0 1rem;
 }
 
 .elm-tab {
   font-family: var(--elm-serif);
-  font-size: var(--font-up-2);
+  font-size: var(--font-up-1);
   font-style: italic;
   color: var(--elm-muted);
   background: none;
   border: none;
-  padding: 0.5rem 0;
-  margin-bottom: -1px;
-  border-bottom: 3px solid transparent;
+  padding: 0.85rem 0.25rem;
+  margin-top: -1px;
+  border-top: 1px solid transparent;
   cursor: pointer;
 
   &:hover {
@@ -122,7 +133,7 @@ body.elm-media-active {
 
   &.is-active {
     color: var(--elm-ink);
-    border-bottom-color: var(--elm-ink);
+    border-top-color: var(--elm-ink);
   }
 }
 
@@ -222,9 +233,10 @@ body.elm-media-active {
 }
 
 // ── Grid ──────────────────────────────────────────────────────────────────
+// Always three across, like Instagram.
 .elm-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: var(--elm-gap);
 }
 
@@ -232,7 +244,8 @@ body.elm-media-active {
   position: relative;
   display: block;
   width: 100%;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 4 / 5; // portrait by default; see .elm--square below
+
   padding: 0;
   border: none;
   border-radius: 0;
@@ -266,6 +279,20 @@ body.elm-media-active {
     background: #111;
     cursor: pointer;
   }
+
+  // Hover: a light dim over the whole tile (no zoom), like Instagram.
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgb(0 0 0 / 0);
+    transition: background 0.15s;
+    pointer-events: none;
+  }
+}
+
+.elm--square .elm-tile {
+  aspect-ratio: 1 / 1;
 }
 
 // Title fades in on hover, over a soft shade at the bottom of the tile.
@@ -291,8 +318,8 @@ body.elm-media-active {
 
 @media (hover: hover) {
   .elm-tile:hover {
-    img {
-      transform: scale(1.03);
+    &::before {
+      background: rgb(0 0 0 / 0.22);
     }
 
     .elm-tile__caption {
@@ -322,7 +349,7 @@ body.elm-media-active {
 // Natural shapes: each photo keeps its own proportions, in columns.
 .elm--natural .elm-grid:not(.elm-grid--skeleton) {
   display: block;
-  columns: 4 220px;
+  columns: 3;
   column-gap: var(--elm-gap);
 
   > li {
@@ -575,19 +602,26 @@ body.category-#{$category_slug} .topic-body .cooked {
 
 // ── Small screens ─────────────────────────────────────────────────────────
 @media (max-width: 700px) {
-  // Phone-app layout: three across, edge to edge, hairline gaps.
-  .elm-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
+  // Phone-app layout: three across, photos flush with the screen edges and
+  // hairline gaps. The grid (and the tab row) break out of the page padding
+  // to the full width of the screen.
+  .elm {
+    --elm-gap: 2px;
   }
 
-  .elm--natural .elm-grid:not(.elm-grid--skeleton) {
-    columns: 2;
-    column-gap: 2px;
+  .elm-grid,
+  .elm-tabs {
+    width: 100vw;
+    margin-inline: calc(50% - 50vw);
+  }
 
-    > li {
-      margin-bottom: 2px;
-    }
+  .elm-tabs {
+    gap: 0;
+  }
+
+  .elm-tab {
+    flex: 1;
+    text-align: center;
   }
 
   .elm-bar {
