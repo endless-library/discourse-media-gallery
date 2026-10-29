@@ -1,0 +1,65 @@
+category_slug:
+  default: "archive"
+  description: "Slug of the category whose photos and videos the gallery shows. Its category page gets Photos / Posts tabs."
+
+default_view:
+  type: enum
+  default: media
+  choices:
+    - media
+    - posts
+  description: "Which tab the category page opens on: the photo grid (media) or the normal topic list (posts)."
+
+media_tab_label:
+  default: "Photos"
+  description: "Label for the gallery tab."
+
+posts_tab_label:
+  default: "Posts"
+  description: "Label for the topic list tab."
+
+tile_shape:
+  type: enum
+  default: square
+  choices:
+    - square
+    - natural
+  description: "square: an even grid of square crops. natural: each photo at its own shape, in columns."
+
+include_replies:
+  default: true
+  description: "Include photos posted as replies, not just in the first post of each topic."
+
+filter_tags:
+  type: list
+  list_type: compact
+  default: ""
+  description: "Tags to show first in the filter bar, in this order. Other tags used in the category follow automatically."
+
+hide_tags:
+  type: list
+  list_type: compact
+  default: ""
+  description: "Tags to leave out of the filter bar (e.g. photo, video if they aren't useful filters)."
+
+share_label:
+  default: "Share photos"
+  description: "Button that starts a new topic in the category, shown to people allowed to post there. Leave empty to hide it."
+
+show_header_link:
+  default: true
+  description: "Show a link to the gallery in the site header, next to the catalogue links."
+
+header_label:
+  default: "Media"
+  description: "Label for the header link and the menu link."
+
+show_menu_link:
+  default: true
+  description: "Also add a link to the Community section of the menu (handy on phones)."
+
+svg_icons:
+  type: list
+  list_type: compact
+  default: "images"
+  description: "Icons this component uses, so Discourse includes them in the icon set."

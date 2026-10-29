@@ -1,0 +1,11 @@
+{
+  "name": "Endless Library Media Gallery",
+  "component": true,
+  "authors": "Endless Library",
+  "about_url": "https://github.com/endless-library/discourse-media-gallery",
+  "license_url": null,
+  "theme_version": "1.0.0",
+  "minimum_discourse_version": "3.4.0",
+  "assets": {},
+  "modifiers": {}
+}

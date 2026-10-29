@@ -1,0 +1,628 @@
+// Endless Library media gallery. Matches the catalogue's look: serif italic
+// tabs, square buttons, thin rules. Colours come from the site's colour
+// scheme, so dark mode works too.
+
+.elm,
+.elm-tabs,
+.elm-lb,
+.elm-header-links {
+  --elm-ink: var(--primary);
+  --elm-muted: var(--primary-medium);
+  --elm-rule: var(--primary-low);
+  --elm-hover: var(--primary-very-low);
+  --elm-bg: var(--secondary);
+  --elm-serif: Georgia, "Times New Roman", serif;
+  --elm-gap: 4px;
+}
+
+// ── Category page: hide the forum chrome while the grid shows ─────────────
+// The gallery renders above the topic list (in the
+// discovery-list-container-top outlet). While the Photos tab is showing, hide
+// the list and its footer, and the category's title bar and buttons. The
+// Posts tab brings them all back.
+body.elm-media-active {
+  .list-controls,
+  #header-list-area,
+  .discovery-layout__category-header,
+  .category-heading,
+  #list-area > .contents,
+  #list-area > .topic-list-bottom,
+  #list-area > .topic-list,
+  #list-area > .load-more-sentinel {
+    display: none;
+  }
+}
+
+// The outlet wraps connectors in a <span>; make ours a block so the grid can
+// take the full width.
+#list-area > :has(> .elm-host) {
+  display: block;
+}
+
+// ── Header link (same look as the catalogue's links) ──────────────────────
+// The header outlet is a plain block, so a second component's links would
+// wrap onto a new line. Lay the outlet out as a row, with ours last.
+.d-header .before-header-panel-outlet:has(.elm-header-links) {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  min-width: 0;
+}
+
+.elm-header-links {
+  order: 1;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding-inline: 0.25rem;
+  min-width: 0;
+
+  .elm-header-link {
+    padding: 0.4em 0.8em;
+    color: var(--elm-ink);
+    font-size: var(--font-0);
+    white-space: nowrap;
+    border-radius: var(--d-button-border-radius, 4px);
+    text-decoration: none;
+
+    &:hover,
+    &:focus-visible {
+      background: var(--elm-hover);
+      color: var(--elm-ink);
+    }
+
+    &.is-active {
+      background: var(--elm-ink);
+      color: var(--elm-bg);
+    }
+  }
+}
+
+// Inside a topic the header shows the topic title in the same spot.
+.d-header:has(.extra-info-wrapper) .elm-header-links {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .elm-header-links .elm-header-link {
+    padding: 0.4em 0.6em;
+  }
+}
+
+// Small phones: the menu link remains.
+@media (max-width: 420px) {
+  .elm-header-links {
+    display: none;
+  }
+}
+
+// ── Tabs ───────────────────────────────────────────────────────────────────
+.elm-tabs {
+  display: flex;
+  gap: 1.5rem;
+  border-bottom: 1px solid var(--elm-ink);
+  margin: 0.5rem 0 1.25rem;
+}
+
+.elm-tab {
+  font-family: var(--elm-serif);
+  font-size: var(--font-up-2);
+  font-style: italic;
+  color: var(--elm-muted);
+  background: none;
+  border: none;
+  padding: 0.5rem 0;
+  margin-bottom: -1px;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--elm-ink);
+  }
+
+  &.is-active {
+    color: var(--elm-ink);
+    border-bottom-color: var(--elm-ink);
+  }
+}
+
+// ── Page ──────────────────────────────────────────────────────────────────
+.elm {
+  color: var(--elm-ink);
+  padding-bottom: 3rem;
+}
+
+:where(.elm, .elm-lb) button {
+  font: inherit;
+  color: inherit;
+}
+
+:where(.elm) ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.elm-btn {
+  display: inline-block;
+  font-size: var(--font-down-1);
+  line-height: 1.4;
+  border: 1px solid var(--elm-ink);
+  background: var(--elm-bg);
+  color: var(--elm-ink);
+  padding: 0.35em 1em;
+  border-radius: 0;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.1s;
+
+  &:hover,
+  &:focus-visible {
+    background: var(--elm-hover);
+    color: var(--elm-ink);
+  }
+
+  &--solid {
+    background: var(--elm-ink);
+    color: var(--elm-bg);
+
+    &:hover,
+    &:focus-visible {
+      background: var(--elm-ink);
+      color: var(--elm-bg);
+      opacity: 0.85;
+    }
+  }
+}
+
+// Filter bar
+.elm-bar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.elm-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.elm-chip {
+  font-size: var(--font-down-1);
+  border: 1px solid var(--elm-rule);
+  background: none;
+  padding: 0.25em 0.8em;
+  color: var(--elm-muted);
+  border-radius: 0;
+  cursor: pointer;
+  transition: border-color 0.1s, color 0.1s;
+
+  &:hover {
+    border-color: var(--elm-ink);
+    color: var(--elm-ink);
+  }
+
+  &.is-active {
+    border-color: var(--elm-ink);
+    background: var(--elm-ink);
+    color: var(--elm-bg);
+  }
+}
+
+.elm-meta {
+  margin: 0 0 1rem;
+  min-height: 1.4em;
+  font-size: var(--font-down-1);
+  color: var(--elm-muted);
+}
+
+// ── Grid ──────────────────────────────────────────────────────────────────
+.elm-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--elm-gap);
+}
+
+.elm-tile {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: var(--elm-hover);
+  overflow: hidden;
+  cursor: zoom-in;
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.35s ease, opacity 0.2s;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--tertiary);
+    outline-offset: 2px;
+  }
+
+  &.is-broken img {
+    display: none;
+  }
+
+  // !important beats the inline placeholder colour.
+  &.is-loaded:not(.is-video) {
+    background: var(--elm-hover) !important;
+  }
+
+  &.is-video {
+    background: #111;
+    cursor: pointer;
+  }
+}
+
+// Title fades in on hover, over a soft shade at the bottom of the tile.
+.elm-tile__caption {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 2.5rem 0.75rem 0.6rem;
+  font-family: var(--elm-serif);
+  font-style: italic;
+  font-size: var(--font-down-1);
+  line-height: 1.3;
+  color: #fff;
+  text-align: left;
+  background: linear-gradient(transparent, rgb(0 0 0 / 0.55));
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@media (hover: hover) {
+  .elm-tile:hover {
+    img {
+      transform: scale(1.03);
+    }
+
+    .elm-tile__caption {
+      opacity: 1;
+    }
+  }
+}
+
+.elm-tile__play {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.6rem;
+  font-size: 0.85rem;
+  color: #fff;
+  text-shadow: 0 1px 3px rgb(0 0 0 / 0.6);
+  pointer-events: none;
+}
+
+// A video without a preview frame: a plain dark tile with a centred play mark.
+.elm-tile.is-video:not(:has(img)) .elm-tile__play {
+  inset: 50% auto auto 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.6rem;
+  opacity: 0.85;
+}
+
+// Natural shapes: each photo keeps its own proportions, in columns.
+.elm--natural .elm-grid:not(.elm-grid--skeleton) {
+  display: block;
+  columns: 4 220px;
+  column-gap: var(--elm-gap);
+
+  > li {
+    break-inside: avoid;
+    margin-bottom: var(--elm-gap);
+  }
+
+  .elm-tile {
+    aspect-ratio: 4 / 3; // overridden per tile by its real proportions
+  }
+}
+
+.elm-grid--skeleton .elm-tile {
+  cursor: default;
+  animation: elm-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes elm-pulse {
+  50% {
+    opacity: 0.45;
+  }
+}
+
+.elm-more {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0 0;
+}
+
+.elm-more__loading {
+  font-size: var(--font-down-1);
+  color: var(--elm-muted);
+}
+
+.elm-state {
+  color: var(--elm-muted);
+  padding: 2rem 0;
+
+  p {
+    margin: 0 0 0.75rem;
+  }
+}
+
+// ── Lightbox ──────────────────────────────────────────────────────────────
+html.elm-noscroll {
+  overflow: hidden;
+}
+
+.elm-lb {
+  --elm-ink: #f2f2f2;
+  --elm-muted: #a8a8a8;
+
+  position: fixed;
+  inset: 0;
+  z-index: 1200; // above the header and composer
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  background: #0b0b0b;
+  color: var(--elm-ink);
+  animation: elm-fade 0.15s ease-out;
+}
+
+@keyframes elm-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+.elm-lb__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+}
+
+.elm-lb__counter {
+  font-size: var(--font-down-1);
+  color: var(--elm-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.elm-lb__close {
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  line-height: 1;
+  padding: 0.4rem 0.5rem;
+  cursor: pointer;
+  color: var(--elm-muted);
+
+  &:hover,
+  &:focus-visible {
+    color: var(--elm-ink);
+  }
+}
+
+.elm-lb__stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  padding: 0 4rem;
+  touch-action: pan-y;
+}
+
+.elm-lb__media {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+video.elm-lb__media {
+  background: #000;
+}
+
+// Transparent PNGs (often black text or line art) would vanish on the dark
+// backdrop; give images a white backing. Opaque photos are unaffected.
+img.elm-lb__media {
+  background: #fff;
+}
+
+.elm-lb__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3rem;
+  height: 5rem;
+  background: none;
+  border: none;
+  font-family: var(--elm-serif);
+  font-size: 3rem;
+  line-height: 1;
+  color: var(--elm-muted);
+  cursor: pointer;
+
+  &:hover,
+  &:focus-visible {
+    color: var(--elm-ink);
+  }
+
+  &--prev {
+    left: 0.5rem;
+  }
+
+  &--next {
+    right: 0.5rem;
+  }
+}
+
+.elm-lb__caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 1rem;
+  padding: 0.9rem 1.25rem 1.1rem;
+  border-top: 1px solid rgb(255 255 255 / 0.12);
+}
+
+.elm-lb__title {
+  font-family: var(--elm-serif);
+  font-style: italic;
+  font-size: var(--font-up-1);
+  color: var(--elm-ink);
+  text-decoration: none;
+
+  &:hover,
+  &:focus-visible {
+    color: var(--elm-ink);
+    text-decoration: underline;
+  }
+}
+
+.elm-lb__byline {
+  font-size: var(--font-down-1);
+  color: var(--elm-muted);
+}
+
+.elm-lb__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+
+.elm-lb__tag {
+  font-size: var(--font-down-2);
+  border: 1px solid rgb(255 255 255 / 0.25);
+  background: none;
+  padding: 0.1em 0.6em;
+  color: var(--elm-muted);
+  cursor: pointer;
+
+  &:hover,
+  &:focus-visible {
+    border-color: var(--elm-ink);
+    color: var(--elm-ink);
+  }
+}
+
+.elm-lb__original {
+  margin-left: auto;
+  font-size: var(--font-down-1);
+  color: var(--elm-muted);
+
+  &:hover,
+  &:focus-visible {
+    color: var(--elm-ink);
+  }
+}
+
+// ── Photos inside Archive topics ──────────────────────────────────────────
+// Discourse's default shows a grey bar with the file name and size on every
+// photo. In the archive that's noise: hide it and tighten the spacing so a
+// post reads like a contact sheet.
+body.category-#{$category_slug} .topic-body .cooked {
+  .lightbox-wrapper .meta {
+    display: none;
+  }
+
+  .lightbox-wrapper,
+  .lightbox-wrapper img,
+  img:not(.emoji, .avatar) {
+    border-radius: 0;
+  }
+
+  .d-image-grid {
+    margin: 0.5rem 0 1rem;
+
+    p {
+      margin: 0;
+    }
+  }
+
+  .d-image-grid[data-columns] {
+    gap: var(--elm-gap, 4px);
+
+    .d-image-grid-column {
+      gap: var(--elm-gap, 4px);
+      padding: 0;
+    }
+
+    .lightbox-wrapper,
+    .image-wrapper {
+      margin: 0;
+    }
+  }
+}
+
+// ── Small screens ─────────────────────────────────────────────────────────
+@media (max-width: 700px) {
+  // Phone-app layout: three across, edge to edge, hairline gaps.
+  .elm-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .elm--natural .elm-grid:not(.elm-grid--skeleton) {
+    columns: 2;
+    column-gap: 2px;
+
+    > li {
+      margin-bottom: 2px;
+    }
+  }
+
+  .elm-bar {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .elm-chips {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .elm-chip {
+    flex: none;
+  }
+
+  .elm-bar .elm-btn--solid {
+    text-align: center;
+  }
+
+  .elm-lb__stage {
+    padding: 0;
+  }
+
+  .elm-lb__nav {
+    display: none; // swipe instead
+  }
+
+  .elm-lb__caption {
+    padding: 0.75rem 1rem 1rem;
+  }
+}
