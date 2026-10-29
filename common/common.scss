@@ -104,6 +104,28 @@ body.elm-media-active {
   margin-inline: auto;
 }
 
+// More columns as the screen widens, at Instagram's breakpoints (see the
+// .elm-grid rules below for the column counts).
+@media (min-width: 1380px) {
+  .elm-host {
+    max-width: 1100px;
+  }
+}
+
+// Five across needs more room than the forum's content column has, so the
+// gallery breaks out of it, centred on the page. The width stops short of the
+// sidebar (about 265px on the left, mirrored on the right to stay centred, plus a little slack).
+@media (min-width: 1730px) {
+  .elm-host {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(1400px, calc(100vw - 600px));
+    max-width: none;
+    margin-inline: 0;
+  }
+}
+
 // ── Tabs ───────────────────────────────────────────────────────────────────
 // Centred, with a hairline above and the active marker on top, as on
 // Instagram's profile page.
@@ -233,11 +255,21 @@ body.elm-media-active {
 }
 
 // ── Grid ──────────────────────────────────────────────────────────────────
-// Always three across, like Instagram.
+// Three across, like Instagram; four from 1380px wide, five from 1730px.
+$elm-cols: 3;
+
 .elm-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat($elm-cols, 1fr);
   gap: var(--elm-gap);
+
+  @media (min-width: 1380px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @media (min-width: 1730px) {
+    grid-template-columns: repeat(5, 1fr);
+  }
 }
 
 .elm-tile {
@@ -349,8 +381,16 @@ body.elm-media-active {
 // Natural shapes: each photo keeps its own proportions, in columns.
 .elm--natural .elm-grid:not(.elm-grid--skeleton) {
   display: block;
-  columns: 3;
+  columns: $elm-cols;
   column-gap: var(--elm-gap);
+
+  @media (min-width: 1380px) {
+    columns: 4;
+  }
+
+  @media (min-width: 1730px) {
+    columns: 5;
+  }
 
   > li {
     break-inside: avoid;
