@@ -194,3 +194,13 @@ export function topicMedia(topic, posts, { includeReplies = true, parse } = {}) 
   }
   return out;
 }
+
+// The id of a category's "About the ..." topic. Discourse's client-side
+// category object carries it only as `topic_url` ("/t/about-the-x/42").
+export function aboutTopicId(category) {
+  if (category?.topic_id) {
+    return Number(category.topic_id);
+  }
+  const match = String(category?.topic_url || "").match(/\/t\/(?:[^/]+\/)?(\d+)/);
+  return match ? Number(match[1]) : null;
+}

@@ -31,6 +31,12 @@ include_replies:
   default: true
   description: "Include photos posted as replies, not just in the first post of each topic."
 
+exclude_topic_ids:
+  type: list
+  list_type: compact
+  default: ""
+  description: "Topic IDs to leave out of the grid, e.g. guidelines posts. The category's own 'About' topic is always left out. Left-out topics still show under Posts."
+
 filter_tags:
   type: list
   list_type: compact

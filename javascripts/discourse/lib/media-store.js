@@ -1,6 +1,6 @@
 import { tracked } from "@glimmer/tracking";
 import { ajax } from "discourse/lib/ajax";
-import { tagNames, topicMedia } from "./media-parse";
+import { aboutTopicId, tagNames, topicMedia } from "./media-parse";
 
 // One shared store for the whole app: the gallery page, the header link and
 // the lightbox all read from it, and topics already fetched are reused when
@@ -141,9 +141,16 @@ class MediaStore {
       this.tagOptions = tagNames(list.top_tags);
     }
 
-    // Skip the category's pinned "About the Archive" topic.
-    const aboutId = this.category.topic_id;
-    const topics = (list.topics || []).filter((t) => t.id !== aboutId);
+    // Skip the category's pinned "About the Archive" topic, and any topics
+    // named in the exclude_topic_ids setting. (They still show under Posts.)
+    const skip = new Set(
+      (settings.exclude_topic_ids || "")
+        .split("|")
+        .map((id) => Number(id.trim()))
+        .filter(Boolean)
+    );
+    skip.add(aboutTopicId(this.category));
+    const topics = (list.topics || []).filter((t) => !skip.has(t.id));
     this.topicCount += topics.length;
 
     for (let i = 0; i < topics.length; i += PARALLEL) {

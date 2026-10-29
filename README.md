@@ -47,6 +47,7 @@ component page.
 | `media_tab_label`, `posts_tab_label` | Tab wording. |
 | `tile_shape` | `portrait` (tall 4:5 crops, the default), `square`, or `natural` (each photo's own shape, in columns). |
 | `include_replies` | Include photos posted as replies, not only first posts. |
+| `exclude_topic_ids` | Topic IDs to leave out of the grid (they still show under Posts). The category's own *About* topic is always left out. |
 | `filter_tags` | Tags to show first in the filter bar, in order. Others in use follow. |
 | `hide_tags` | Tags to leave out of the filter bar. |
 | `share_label` | The new-topic button. Empty hides it. |

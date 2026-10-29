@@ -4,6 +4,7 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import { JSDOM } from "jsdom";
 import {
+  aboutTopicId,
   extractMedia,
   largestFromSrcset,
   tagNames,
@@ -127,4 +128,12 @@ test("topic: items carry post link, author, date and tags; skips hidden and non-
 
   const firstOnly = topicMedia(topic, posts, { includeReplies: false, parse });
   assert.deepEqual(firstOnly.map((i) => i.key), ["first"]);
+});
+
+test("about topic: id comes from topic_id, or from topic_url", () => {
+  assert.equal(aboutTopicId({ topic_url: "/t/about-the-archive-category/42" }), 42);
+  assert.equal(aboutTopicId({ topic_url: "/t/about-the-archive-category/42/1" }), 42);
+  assert.equal(aboutTopicId({ topic_id: 7, topic_url: "/t/x/42" }), 7);
+  assert.equal(aboutTopicId({}), null);
+  assert.equal(aboutTopicId(undefined), null);
 });
