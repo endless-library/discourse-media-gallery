@@ -54,8 +54,8 @@ share_label:
   description: "Button that starts a new topic in the category, shown to people allowed to post there. Leave empty to hide it."
 
 show_header_link:
-  default: true
-  description: "Show a link to the gallery in the site header, next to the catalogue links."
+  default: false
+  description: "Show this component's own Media link in the site header. Off by default: the Endless Library Catalogue component now puts Media in its header group (beside the logo, and in the phones' second row)."
 
 header_label:
   default: "Media"
